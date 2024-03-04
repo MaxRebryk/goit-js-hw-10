@@ -32,6 +32,6 @@ form.addEventListener("submit", (event) =>{
         message: `❌ Rejected promise in ${time}ms`
     })
     ); 
-})
+});
 
 
