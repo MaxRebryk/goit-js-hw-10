@@ -32,7 +32,6 @@ const addZero = (obj) => {
             obj[key] = value;
             
         }
-    console.log(obj)
     return obj;
     }
 }
@@ -40,9 +39,10 @@ const days = document.querySelector("[data-days]");
 const hours = document.querySelector("[data-hours]");
 const minutes = document.querySelector("[data-minutes]");
 const seconds = document.querySelector("[data-seconds]");
+const dateInput = document.querySelector("#datetime-picker");
 
 
-let date;
+let serSelectedDate;
 const button = document.querySelector("[data-start]");
 button.disabled = true;
 const options = {
@@ -51,18 +51,17 @@ const options = {
     defaultDate: new Date(),
     minuteIncrement: 1,
     onClose(selectedDates) {
-      date = selectedDates[0];
-      if(date < Date.now()){
+      serSelectedDate = selectedDates[0];
+      if(serSelectedDate < Date.now()){
         iziToast.show({
             title: 'Error',
             message: 'Please choose a date in the future'
         });
         button.disabled = true;
       }
-      if (date > Date.now()){
+      if (serSelectedDate > Date.now()){
         button.disabled = false;
       }
-      console.log(date);
     },
   };
   
@@ -73,7 +72,8 @@ flatpickr("#datetime-picker", options);
 button.addEventListener("click", (event) => {
     const interval = () =>{
         button.disabled = true;
-        const ms = date - Date.now();
+        dateInput.disabled = true;
+        const ms = serSelectedDate - Date.now();
         const dateObj = convertMs(ms);
         addZero(dateObj);
         days.textContent = dateObj.days;
